@@ -18,6 +18,10 @@ ComportementPersonne, java.io.Serializable {
 	public GroupePersonnel(ArrayList<PERSONNE> listepersonnel) {
 		this.listepersonnel=listepersonnel; 
 		}
+	public GroupePersonnel(int  IdGroupe) {
+		listepersonnel = new ArrayList<PERSONNE>();
+		this.IdGroupe=IdGroupe; 
+		}
 	public void AjouterPersonnel(PERSONNE p) {
 		this.listepersonnel.add(p); 
 		}

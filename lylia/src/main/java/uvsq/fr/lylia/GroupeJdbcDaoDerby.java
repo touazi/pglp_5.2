@@ -1,6 +1,7 @@
 package uvsq.fr.lylia;
 
 import java.sql.*;
+import java.util.Iterator;
 import java.util.List;
 
 import uvsq.fr.lylia.exeption.PersonneDoncExistException;
@@ -19,15 +20,22 @@ public class GroupeJdbcDaoDerby implements DAO<GroupePersonnel>{
 			int result = prepare.executeUpdate();
 			assert result == 1;
 			List<PERSONNE> lp = obj.getlistepersonnel();
-			for (PERSONNE p : lp) {
-				prepare = connect.prepareStatement(
-						"INSERT INTO APPARTENIR "
-						+ "VALUES (?, ?)");
-				prepare.setString(1, obj.getId());
-				prepare.setString(2, p.getNom());
-				prepare.addBatch();
-			}
+
+	
+			
+			for(Iterator<PERSONNE> it=lp.iterator(); it.hasNext();)
+			{PERSONNE n= it.next();
+			
+			prepare = connect.prepareStatement(
+					"INSERT INTO APPARTENIR "
+					+ "VALUES (?, ?)");
+			prepare.setString(1, obj.getId());
+			prepare.setString(2, n.getNom());
+			prepare.addBatch();
+       }
 			prepare.executeBatch();
+			
+			
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
@@ -40,15 +48,16 @@ public class GroupeJdbcDaoDerby implements DAO<GroupePersonnel>{
 		GroupePersonnel pg = null;
 		try (Connection connect = DriverManager.getConnection(dburl)) {
 			System.out.println("Recherche " + id);
-			PreparedStatement prepare = connect.prepareStatement(
-					"SELECT * FROM appartient WHERE id = ?");
-			prepare.setString(1, id);
-			pg = new GroupePersonnel();
-			ResultSet result = prepare.executeQuery();
-			JdbsDaoPersonneDerby pjd = new JdbsDaoPersonneDerby();
+			   pg = new GroupePersonnel();
+				JdbsDaoPersonneDerby JdbsDaoPersonne = new JdbsDaoPersonneDerby();
+			Statement st = connect.createStatement();
+			st.setFetchSize(0);
+			ResultSet result = st.executeQuery("SELECT * FROM APPARTENIR WHERE id = id");
 			while (result.next()) {
-		        pg.AjouterPersonnel(pjd.read(result.getString("nom")));
-		    }
+			   System.out.println(result.getString("nom"));
+
+				//System.out.println(result.next());
+			}
 								
 		}
 		catch (SQLException e) {

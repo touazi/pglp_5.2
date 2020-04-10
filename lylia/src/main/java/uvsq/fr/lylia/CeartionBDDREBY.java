@@ -22,7 +22,6 @@ public class CeartionBDDREBY {
 	
 	public void createTables() throws TableExisteDeja {
 		try (Connection connect = DriverManager.getConnection(dburl)) {
-			//  Statement statement = getConnection().createStatement();
 			  Statement state = connect.createStatement();
 			    DatabaseMetaData databaseMetadata = connect.getMetaData();
 			    ResultSet resultSet = databaseMetadata.getTables(null, null, "PERSONNE", null);

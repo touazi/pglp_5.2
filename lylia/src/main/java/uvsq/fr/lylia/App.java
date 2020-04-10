@@ -33,10 +33,13 @@ public class App
 				.fonction("directeur")
 				.build();
 		  GroupePersonnel gg;
-		  GroupePersonnel g=new GroupePersonnel();
-		  g.AjouterPersonnel(personne);
+		  GroupePersonnel g=new GroupePersonnel(1);
+		  GroupePersonnel g2=new GroupePersonnel();
+		 
 
    g.AjouterPersonnel(personne2);
+   g.AjouterPersonnel(personne3);
+   g.AjouterPersonnel(personne);
    System.out.println(g.getlistepersonnel().size());
   /* if(g.getlistepersonnel().size()>0) {
 		List<PERSONNE> liste=g.getlistepersonnel();
@@ -45,12 +48,13 @@ public class App
            n.print();}}*/
    GroupeJdbcDaoDerby G=new GroupeJdbcDaoDerby();
   gg=G.create(g);
-  if(gg.getlistepersonnel().size()>0) {
-		List<PERSONNE> liste=gg.getlistepersonnel();
-		for(Iterator<PERSONNE> it=liste.iterator(); it.hasNext();)
-			{n= it.next();
-         n.print();}}
+  g.print();
+  gg=G.read(g.getId());
+  System.out.println(262);
+  System.out.println(gg.getlistepersonnel().size());
+ 
     }
-
+   
+  
     }
 
