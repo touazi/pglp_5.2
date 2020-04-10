@@ -9,9 +9,12 @@ package uvsq.fr.lylia;
  * Cette class  implemente Serializable.
  * @author TOUAZI,Lylia
  */
-public class NumeroTelephone implements java.io.Serializable {
+public class NumeroTelephone implements java.io.Serializable, ComportementPersonne {
 	/**
-	 *.
+	 *CREATE TABLE NumeroTelephone (.
+					type VARCHAR(100) NOT NULL,
+					telephone VARCHAR(100) PRIMARY KEY
+					));
 	 */
 	private static final long serialVersionUID = 1L;
 	/**
@@ -35,6 +38,26 @@ public class NumeroTelephone implements java.io.Serializable {
 		this.type = type;
 		this.telephone = telephone;
 	}
+	public NumeroTelephone(String s, String telephone) {
+		Type f=null;
+		if(s.contentEquals("fix_perso")) {
+			 f=Type.fix_perso;
+			
+			
+		}
+		if(s.contentEquals("fix_pro")) {
+			 f=Type.fix_pro;
+			
+			
+		}
+		if(s.contentEquals("portable")) {
+			 f=Type.portable;
+			
+			
+		}
+		this.type = f;
+		this.telephone = telephone;
+	}
 /**
  * Méthode getType.
  * @return
@@ -50,5 +73,11 @@ public class NumeroTelephone implements java.io.Serializable {
 	 **/
 	public final String getTelephone() {
 		return telephone;
+	}
+	@Override
+	public void print() {
+		System.out.println("Mon numéro de  "  +  this.type  + " est  " + this.telephone);
+			
+		
 	}
 }

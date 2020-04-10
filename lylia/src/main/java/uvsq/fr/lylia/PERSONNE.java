@@ -1,7 +1,9 @@
 package uvsq.fr.lylia;
+import  uvsq.fr.lylia.NumeroTelephone;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 /**
  * <b>"L'implementation de la class imuable personne.</b>
@@ -91,10 +93,40 @@ java.io.Serializable {
 	     * @return
 	     * PERSONNEBuilder.
 	     */
+		/*CREATE TABLE Personne (
+					nom VARCHAR(100) not null,
+					prenom VARCHAR(100) NOT NULL,
+    				fonction VARCHAR(100) NOT NULL,
+    				datenaisssance Date NOT NULL,
+    PRIMARY KEY(nom,prenom)
+					 )*/
 		public PERSONNEBuilder fonction(fonction fonction) {
 			this.fonction = fonction;
 			return this;
-			}	
+			}
+		public PERSONNEBuilder fonction(String s) {
+			if(s.contentEquals("directeur")) {
+				fonction f=uvsq.fr.lylia.fonction.directeur;
+				this.fonction = f;
+				
+			}
+			if(s.contentEquals("charger_de_mission")) {
+				fonction f=uvsq.fr.lylia.fonction.charger_de_mission;
+				this.fonction = f;
+				
+			}
+			if(s.contentEquals("emplyer")) {
+				fonction f=uvsq.fr.lylia.fonction.emplyer;
+				this.fonction = f;
+				
+			}
+			if(s.contentEquals("vendeur")) {
+				fonction f=uvsq.fr.lylia.fonction.vendeur;
+				this.fonction = f;
+				
+			}
+			return this;
+		}
 	    /**
 	     * méthode dateNaissance.
 	     * * @param dateNaissance
@@ -120,6 +152,7 @@ java.io.Serializable {
 		public PERSONNE build() {
 			return new PERSONNE(this);
 			}
+
 		}
 	/**Constructeur PERSONNE.
 	 * cette méthode renvoie un nouvel objet de la classe personne,il copie les valeurs des champs du générateur vers lui-même..
@@ -170,8 +203,16 @@ java.io.Serializable {
 	/**la methode print.*/
 	public void print() {
 		// TODO Auto-generated method stub
+		NumeroTelephone   n = null ;
 		System.out.println("  Je suis "  +  this.nom  + " " + this.prenom + "  née le  "  + 
-		this.dateNaissance  +  " et je travaille comme " + this.fonction);
-		}
+		this.dateNaissance  +  " et je travaille comme " + this.fonction  );
+		System.out.println("J'ai " + this.getNumerosTelephone().size() + " numéro.");
+	if( this.getNumerosTelephone().size()>0) {
+		List<NumeroTelephone> liste=this.getNumerosTelephone();
+		for(Iterator<NumeroTelephone> it=liste.iterator(); it.hasNext();)
+			{n= it.next();
+            n.print();}}
+	}
+ 
 
 	}
