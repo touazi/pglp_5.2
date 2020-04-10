@@ -37,8 +37,25 @@ public class GroupeJdbcDaoDerby implements DAO<GroupePersonnel>{
 
 	@Override
 	public GroupePersonnel read(String id) throws PersonneDoncExistException {
-		// TODO Auto-generated method stub
-		return null;
+		GroupePersonnel pg = null;
+		try (Connection connect = DriverManager.getConnection(dburl)) {
+			System.out.println("Recherche " + id);
+			PreparedStatement prepare = connect.prepareStatement(
+					"SELECT * FROM appartient WHERE id = ?");
+			prepare.setString(1, id);
+			pg = new GroupePersonnel();
+			ResultSet result = prepare.executeQuery();
+			JdbsDaoPersonneDerby pjd = new JdbsDaoPersonneDerby();
+			while (result.next()) {
+		        pg.AjouterPersonnel(pjd.read(result.getString("nom")));
+		    }
+								
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return pg;
+		
 	}
 
 	@Override
