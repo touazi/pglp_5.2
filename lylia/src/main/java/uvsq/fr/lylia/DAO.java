@@ -34,12 +34,14 @@ public interface DAO<T> {
 	*l'object qui sera modifier.
 	*@return
 	*un objet de type T
+	 * @throws PersonneDoncExistException 
 	*/
-	T update(T obj);
+	T update(T obj) throws PersonneDoncExistException;
 	/**
 	*methode delete.
 	*@param obj
 	*l'object qui sera suprimer.
+	 * @throws PersonneDoncExistException 
 	*/
-	void delete(T obj);
+	void delete(T obj) throws PersonneDoncExistException;
 	}

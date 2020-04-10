@@ -14,7 +14,7 @@ import uvsq.fr.lylia.exeption.PersonneExisteDeja;
 public class TestJdbcPersonne {
 
 	private JdbsDaoPersonne p;
-	private PERSONNE  pRead,pCreate,personne;
+	private PERSONNE  pRead,pCreate,personne,personne2,personne3;
 	@Before
 	public void setUp() throws Exception {
 		pCreate=null;
@@ -23,6 +23,14 @@ public class TestJdbcPersonne {
 						.dateNaissance(LocalDate.parse("1997-04-22"))
 						.fonction("directeur")
 						.build();
+		  personne2 = new PERSONNEBuilder("cc", "cv")
+					.dateNaissance(LocalDate.parse("1994-04-22"))
+					.fonction("vendeur")
+					.build();
+		  personne3 = new PERSONNEBuilder("hhhh", "hihi")
+					.dateNaissance(LocalDate.parse("1912-12-12"))
+					.fonction("directeur")
+					.build();
 		        p=new JdbsDaoPersonne();
 	}
 
@@ -53,5 +61,26 @@ public class TestJdbcPersonne {
 	public void createReadTestexption() throws PersonneDoncExistException {
 		pCreate = p.create(personne);
 		pRead = p.read("lylia");
+		}
+
+	@Test(expected = PersonneDoncExistException.class)
+	public void deleteTestexption() throws PersonneDoncExistException {
+		pCreate = p.create(personne3);
+		pRead = p.read(personne3.getNom());
+		p.delete(personne3);
+		pRead = p.read(personne3.getNom());
+		
+		}
+	@Test 
+	public void updateTest() throws PersonneDoncExistException {	
+		pCreate = p.create(personne);
+		assertEquals(pCreate.getNom(),"TOUAZI");
+		personne2 =new PERSONNEBuilder("TOUAZI", "moi")
+		.dateNaissance(LocalDate.parse("1994-04-22"))
+		.fonction("vendeur")
+		.build();
+		pCreate = p.update(personne2);
+		assertEquals(pCreate.getNom(),"TOUAZI");
+		assertEquals(pCreate.getFonction().toString(),"vendeur");
 		}
 }

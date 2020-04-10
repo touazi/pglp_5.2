@@ -53,15 +53,61 @@ public class JdbsDaoPersonne implements DAO<PERSONNE> {
 	}
 
 	@Override
-	public PERSONNE update(PERSONNE obj) {
+	public PERSONNE update(PERSONNE obj) throws PersonneDoncExistException {
 		// TODO Auto-generated method stub
-		return null;
+		
+		try (Connection connect = DriverManager.getConnection(dburl)) {
+			PreparedStatement prepareFind = connect.prepareStatement(
+					"SELECT * FROM personne WHERE nom = ?  ");
+			prepareFind.setString(1, obj.getNom());
+			ResultSet res = prepareFind.executeQuery();
+			
+			if(!res.next()) { throw new PersonneDoncExistException(""
+					+ "La personne que vous voulez modifier"
+					+ " n'éxiste pas :( !");}
+			else {
+			PreparedStatement prepare = connect.prepareStatement(
+					"UPDATE personne SET prenom = ?, "
+					+ "fonction = ?, "
+					+ "datenaisssance = ? WHERE nom = ?");
+			prepare.setString(1, obj.getPrenom());
+			prepare.setString(2, obj.getFonction().toString());
+			prepare.setDate(3, Date.valueOf(obj.getDateNaissance()));
+			prepare.setString(4, obj.getNom());
+			int result = prepare.executeUpdate();
+			assert result == 1;}
+		}
+		catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return obj;
 	}
 
 	@Override
-	public void delete(PERSONNE obj) {
+	public void delete(PERSONNE obj) throws PersonneDoncExistException {
 		// TODO Auto-generated method stub
-		
+		read(obj.getNom());
+		try (Connection connect = DriverManager.getConnection(dburl)) {
+			PreparedStatement prepareFind = connect.prepareStatement(
+					"SELECT * FROM personne WHERE nom = ?  ");
+			prepareFind.setString(1, obj.getNom());
+			ResultSet res = prepareFind.executeQuery();
+			
+			if(!res.next()) { throw new PersonneDoncExistException(""
+					+ "La personne que vous voulez modifier"
+					+ " n'éxiste pas :( !");}
+			else {
+			PreparedStatement prepare = connect.prepareStatement(
+					"DELETE FROM personne "
+					+ "WHERE nom = ?");
+			prepare.setString(1, obj.getNom());
+			int result = prepare.executeUpdate();
+			assert result == 1;
+		}}
+		catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+	
 	}
 
 }
