@@ -12,7 +12,7 @@ public class CeartionBDDREBY {
 	private static final String userName = "";
 	private static final String password = "";
 	
-	public static String dburl = "jdbc:derby:pglp_5.2;create=true";
+	public static String dburl = "jdbc:derby:Derby;create=true";
 	
 	public CeartionBDDREBY() {
 		Properties connectionProps = new Properties();
@@ -26,6 +26,7 @@ public class CeartionBDDREBY {
 			  Statement state = connect.createStatement();
 			    DatabaseMetaData databaseMetadata = connect.getMetaData();
 			    ResultSet resultSet = databaseMetadata.getTables(null, null, "PERSONNE", null);
+			    
 			    if (resultSet.next()) {
 			    	throw new TableExisteDeja("TABLE ALREADY EXISTS");
 			    } else {
@@ -37,12 +38,27 @@ public class CeartionBDDREBY {
 							+ "prenom VARCHAR(100) NOT NULL,"
 		    				+ "fonction VARCHAR(100) NOT NULL,"
 		    				+ "datenaisssance Date NOT NULL,"
-		    			   + "PRIMARY KEY(nom,prenom)"
+		    			   + "PRIMARY KEY(nom)"
 					+ ")");
 			
 			    }
-    						
-
+			    ResultSet result = databaseMetadata.getTables(null, null, "GROUPE", null);
+			    if (result.next()) {
+			    	throw new TableExisteDeja("TABLE ALREADY EXISTS");
+			    } else {			
+				state.addBatch("CREATE TABLE groupe ("
+						+ "id VARCHAR(100) PRIMARY KEY"
+						+ ")");}
+			    ResultSet res = databaseMetadata.getTables(null, null, "APPARTENIR", null);
+			    if (res.next()) {
+			    	throw new TableExisteDeja("TABLE ALREADY EXISTS");
+			    } else {
+				state.addBatch( 
+						"CREATE TABLE appartenir("
+						+ "id VARCHAR(100),"
+						+ "nom VARCHAR(100)"
+						+ ")");
+			    }
 			state.executeBatch();
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -10,23 +10,23 @@ ComportementPersonne, java.io.Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private int  IdGroupe;
-	final ArrayList<ComportementPersonne> listepersonnel ;
+	final ArrayList<PERSONNE> listepersonnel ;
 	public GroupePersonnel() {
-		listepersonnel = new ArrayList<ComportementPersonne>();
+		listepersonnel = new ArrayList<PERSONNE>();
 		IdGroupe = 1 + (int)(Math.random() * ((1000 - 1) + 1));
 		}
-	public GroupePersonnel(ArrayList<ComportementPersonne> listepersonnel) {
+	public GroupePersonnel(ArrayList<PERSONNE> listepersonnel) {
 		this.listepersonnel=listepersonnel; 
 		}
-	public void AjouterPersonnel(ComportementPersonne p) {
+	public void AjouterPersonnel(PERSONNE p) {
 		this.listepersonnel.add(p); 
 		}
-	public void SuprimerPersonnel(ComportementPersonne p) {
+	public void SuprimerPersonnel(PERSONNE p) {
 		if(this.listepersonnel.contains(p)) {
 			this.listepersonnel.remove(p);
 			}
 		}
-	public ArrayList<ComportementPersonne> getlistepersonnel() {
+	public ArrayList<PERSONNE> getlistepersonnel() {
 		return this.listepersonnel;
 		}
 	public String getId() {
@@ -34,7 +34,7 @@ ComportementPersonne, java.io.Serializable {
 	}
 	public void print() {
 		// TODO Auto-generated method stub
-		for (ComportementPersonne p :listepersonnel) {
+		for (PERSONNE p :listepersonnel) {
 			p.print(); 
 			}
 		}

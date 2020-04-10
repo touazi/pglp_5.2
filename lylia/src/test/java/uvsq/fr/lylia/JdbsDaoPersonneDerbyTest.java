@@ -41,6 +41,11 @@ public class JdbsDaoPersonneDerbyTest {
 		CeartionBDDREBY b= new CeartionBDDREBY();
     	b.createTables();
 	}
+	@Test(expected = TableExisteDeja.class)
+	public void CeartionBDDREBYGROUPETest() throws TableExisteDeja {
+		CeartionBDDREBY b= new CeartionBDDREBY();
+    	b.createTables();
+	}
 	@Test(expected = PersonneDoncExistException.class)
 	public void ReadExistpas() throws PersonneDoncExistException {
 		p.read("allo");
