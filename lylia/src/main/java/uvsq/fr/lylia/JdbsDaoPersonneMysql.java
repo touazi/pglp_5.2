@@ -1,22 +1,16 @@
 package uvsq.fr.lylia;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.time.LocalDate;
+import java.sql.*;
 
+import java.time.LocalDate;
 import uvsq.fr.lylia.PERSONNE.PERSONNEBuilder;
 import uvsq.fr.lylia.exeption.PersonneDoncExistException;
-import uvsq.fr.lylia.exeption.PersonneExisteDeja;
 
-public class JdbsDaoPersonneDerby implements DAO<PERSONNE> {
-	private static String dburl = CeartionBDDREBY.dburl;
+public class JdbsDaoPersonneMysql implements DAO<PERSONNE> {
+	public static String dburl = "jdbc:mysql://localhost/test";
 
 	@Override
-	public PERSONNE create(PERSONNE obj) throws PersonneExisteDeja {
+	public PERSONNE create(PERSONNE obj) {
 		try (Connection connect = DriverManager.getConnection(dburl)) {
 			PreparedStatement prepare = connect.prepareStatement(
 					"INSERT  INTO Personne (nom, prenom, fonction, datenaisssance)" + "VALUES (?, ?, ?, ?)");
@@ -27,7 +21,7 @@ public class JdbsDaoPersonneDerby implements DAO<PERSONNE> {
 			int result = prepare.executeUpdate();
 			assert result == 1;
 		} catch (SQLException e) {
-			e.getMessage();
+			System.out.println(e.getMessage());
 
 		}
 		return obj;
@@ -50,7 +44,7 @@ public class JdbsDaoPersonneDerby implements DAO<PERSONNE> {
 				throw new PersonneDoncExistException("La personne que vous chercher n'éxiste pas :( !");
 			}
 		} catch (SQLException e) {
-			e.getMessage();
+			System.out.println(e.getMessage());
 		}
 		return personne;
 	}
@@ -78,7 +72,7 @@ public class JdbsDaoPersonneDerby implements DAO<PERSONNE> {
 				assert result == 1;
 			}
 		} catch (SQLException e) {
-			e.getMessage();
+			System.out.println(e.getMessage());
 		}
 		return obj;
 	}
@@ -102,8 +96,9 @@ public class JdbsDaoPersonneDerby implements DAO<PERSONNE> {
 				assert result == 1;
 			}
 		} catch (SQLException e) {
-			e.getMessage();
+			System.out.println(e.getMessage());
 		}
 
 	}
+
 }

@@ -1,4 +1,5 @@
 package uvsq.fr.lylia;
+
 /**
  * <b>"les type des fonctions exercer.</b>
  *
@@ -13,27 +14,28 @@ package uvsq.fr.lylia;
  * @author TOUAZI,Lylia
  */
 public enum fonction {
-/**
-     * L'énumération des fonctions.
-     * directeur
-     * @since 2020
-     */
- directeur,
- /**
-  * L'énumération des fonctions.
-  * charger_de_mission
-  * @since 2020
-  */
- charger_de_mission,
- /**
-  * L'énumération des fonctions.
-  * emplyer
-  * @since 2020
-  */
- emplyer,
- /**
-  * L'énumération des fonctions.
-  * vendeur
-  * @since 2020
-  */
- vendeur; }
+	/**
+	 * L'énumération des fonctions. directeur
+	 * 
+	 * @since 2020
+	 */
+	directeur,
+	/**
+	 * L'énumération des fonctions. charger_de_mission
+	 * 
+	 * @since 2020
+	 */
+	charger_de_mission,
+	/**
+	 * L'énumération des fonctions. emplyer
+	 * 
+	 * @since 2020
+	 */
+	emplyer,
+	/**
+	 * L'énumération des fonctions. vendeur
+	 * 
+	 * @since 2020
+	 */
+	vendeur;
+}

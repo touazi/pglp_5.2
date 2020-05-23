@@ -2,7 +2,7 @@ package uvsq.fr.lylia;
 
 import java.io.Serializable;
 
-public class GroupeDao <T extends Serializable> extends Serialization<GroupePersonnel> implements DAO<GroupePersonnel> {
+public class GroupeDao<T extends Serializable> extends Serialization<GroupePersonnel> implements DAO<GroupePersonnel> {
 
 	@Override
 	public GroupePersonnel create(GroupePersonnel obj) {
@@ -26,7 +26,7 @@ public class GroupeDao <T extends Serializable> extends Serialization<GroupePers
 	public void delete(GroupePersonnel obj) {
 		// TODO Auto-generated method stub
 		deleteFile(obj.getId());
-		
+
 	}
 
 }
